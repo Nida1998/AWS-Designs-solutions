@@ -1,0 +1,52 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: This cloudformation template will create basic infrastructure on AWS Cloud. In cloudformation its not possible to iterate from all AZs and create Subnets.
+Resources:
+
+  myVPC:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: 10.0.0.0/16
+      EnableDnsSupport: 'true'
+      EnableDnsHostnames: 'true'
+      Tags:
+      - Key: stack
+        Value:  !Join ['', [!Ref "AWS::StackName", "-VPC" ]]
+
+  PublicSubnet:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId:
+        Ref: myVPC
+      CidrBlock: 10.0.0.0/24
+      # AvailabilityZone: "us-east-1a"
+      Tags:
+      - Key: stack
+        Value:  !Join ['', [!Ref "AWS::StackName", "-PublicSubnet" ]] 
+
+  PrivateSubnet:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId:
+        Ref: myVPC
+      CidrBlock: 10.0.0.0/24
+      # AvailabilityZone: "us-east-1a"
+      Tags:
+      - Key: stack
+        Value:  !Join ['', [!Ref "AWS::StackName", "-PrivateSubnet" ]]  
+
+
+  InternetGateway:
+    Type: AWS::EC2::InternetGateway
+    Properties:
+      Tags:
+      - Key: stack
+        Value: !Join ['', [!Ref "AWS::StackName", "-IGW" ]]      
+
+  AttachGateway:
+    Type: AWS::EC2::VPCGatewayAttachment
+    Properties:
+      VpcId:
+        Ref: myVPC
+      InternetGatewayId:
+        Ref: InternetGateway
+           
