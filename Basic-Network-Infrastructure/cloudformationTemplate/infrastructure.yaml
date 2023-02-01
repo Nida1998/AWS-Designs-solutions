@@ -1,5 +1,5 @@
 AWSTemplateFormatVersion: 2010-09-09
-Description: This cloudformation template will create basic infrastructure on AWS Cloud. In cloudformation its not possible to iterate from all AZs and create Subnets.
+Description: This cloudformation template will create basic infrastructure on AWS Cloud. In cloudformation its not possible to iterate from all AZs and create Subnets Author Nida.
 Resources:
 
   myVPC:
